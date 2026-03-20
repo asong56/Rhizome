@@ -5,7 +5,7 @@
     const E = document.getElementById('ne');
 
     try {
-        const nodes = await fetch('/nodes.json').then(r => {
+        const nodes = await fetch('nodes.json').then(r => {
             if (!r.ok) throw 0;
             return r.json();
         });
