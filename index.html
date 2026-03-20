@@ -30,9 +30,9 @@
                     Rhizome
                 </a>
                 <ul role="list">
-                    <li><a href="#nodes">Nodes</a></li>
+                    <li><a href="#traverse">Traverse</a></li>
                     <li><a href="#join">Join</a></li>
-                    <li><a href="https://github.com/ansel-s/Rhizome" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+                    <li><a href="https://github.com/Ansel-S/Rhizome" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
                 </ul>
             </nav>
         </header>
@@ -84,33 +84,26 @@
                 <h2 id="join-heading">Join the Network</h2>
                 <ol class="steps" role="list">
                     <li class="step">
-                        <p><strong>Fork this repo</strong> and add your site to <code>nodes.json</code>, or open a PR.</p>
-                    </li>
-                    <li class="step">
-                        <p>Embed the <strong>Spore</strong> on your site, before <code>&lt;/body&gt;</code>:</p>
+                        <p>Embed the <strong>Spore</strong> on your site before <code>&lt;/body&gt;</code>:</p>
                     </li>
                 </ol>
                 <figure>
-                    <figcaption class="sr-only">Embed code for the Rhizome Spore component</figcaption>
+                    <figcaption class="sr-only">Spore embed code</figcaption>
                     <pre><code>
-                        <span class="ck">&lt;!-- node-url is your site's URL — no ID needed --&gt;</span>
                         <span class="kw">&lt;rhizome-spore</span>
                         <span class="st">theme="light"</span>
                         <span class="st">node-url="https://yoursite.com"</span>
-                        <span class="st">host="https://ansel-s.github.io/Rhizome"</span>
+                        <span class="st">host="https://Ansel-S.github.io/Rhizome"</span>
                         <span class="kw">&gt;&lt;/rhizome-spore&gt;</span>
                         <span class="kw">&lt;script</span>
-                        <span class="st">src="https://ansel-s.github.io/Rhizome/spore.js"</span>
+                        <span class="st">src="https://Ansel-S.github.io/Rhizome/spore.js"</span>
                         <span class="st">async</span>
                         <span class="kw">&gt;&lt;/script&gt;</span>
                     </code></pre>
                 </figure>
                 <ol class="steps" role="list" style="margin-top:28px">
                     <li class="step">
-                        <p>CI probes every node weekly. Unreachable nodes are marked <code>dormant</code> and excluded from traversal.</p>
-                    </li>
-                    <li class="step">
-                        <p>Every PR to <code>nodes.json</code> is schema-validated automatically before merge.</p>
+                        <p><a href="https://github.com/Ansel-S/Rhizome/issues/new?template=join.yml" target="_blank" rel="noopener noreferrer">Open an issue</a> with your site name, URL, and bio — I'll add you if passed the test.</p>
                     </li>
                 </ol>
             </section>
@@ -120,7 +113,7 @@
         <footer>
             <p>🌿 Rhizome — decentralized webring protocol</p>
             <nav aria-label="Footer links">
-                <a href="https://github.com/ansel-s/Rhizome" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://github.com/Ansel-S/Rhizome" target="_blank" rel="noopener noreferrer">GitHub</a>
                 &thinsp;·&thinsp;
                 <a href="nodes.json">nodes.json</a>
                 &thinsp;·&thinsp;
