@@ -1,0 +1,377 @@
+:root {
+    --bg:   #F5F2EC;
+    --ink:  #18160F;
+    --sub:  #78746C;
+    --rule: rgba(24,22,15,.1);
+    --ac:   #1E4919;
+    --gold: #B8860B;
+    --rz-bg:#F5F2EC;
+    --sf: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --se: 'Playfair Display', Georgia, serif;
+    --mo: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sf);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+}
+
+body {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Nav ─────────────────────────────────────────── */
+nav {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+}
+
+.logo {
+    font-family: var(--se);
+    font-size: 17px;
+    letter-spacing: -.01em;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    font-size: 13px;
+    color: var(--sub);
+    transition: color .18s;
+}
+
+nav a:hover { color: var(--ac); }
+
+/* ── Hero ────────────────────────────────────────── */
+.hero { padding: 88px 0 64px; }
+
+h1 {
+    font-family: var(--se);
+    font-size: clamp(38px, 7.5vw, 60px);
+    font-weight: 400;
+    letter-spacing: -.03em;
+    line-height: 1.05;
+    margin-bottom: 32px;
+}
+
+h1 em { font-style: italic; color: var(--ac); }
+
+blockquote {
+    font-family: var(--se);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--sub);
+    max-width: 460px;
+    border-left: 1px solid var(--ac);
+    padding-left: 20px;
+    margin-bottom: 48px;
+}
+
+cite {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-family: var(--sf);
+    font-size: 11px;
+    letter-spacing: .03em;
+    opacity: .65;
+}
+
+.metrics { display: flex; gap: 40px; flex-wrap: wrap; }
+.metric  { display: flex; flex-direction: column; gap: 4px; }
+
+.val {
+    font-family: var(--se);
+    font-size: 26px;
+    color: var(--ac);
+    letter-spacing: -.02em;
+}
+
+.lbl {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sub);
+}
+
+/* ── Sections ────────────────────────────────────── */
+section {
+    padding: 56px 0;
+    border-top: 1px solid var(--rule);
+}
+
+h2 {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--sub);
+    margin-bottom: 28px;
+}
+
+/* ── Nodes table ─────────────────────────────────── */
+.nw { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+col.c0 { width: 22px; }
+col.c1 { width: 28%; }
+col.c3 { width: 84px; }
+
+th {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--sub);
+    text-align: left;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+}
+
+td {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+
+td:not(:last-child) { padding-right: 20px; }
+
+tbody tr { transition: background .45s cubic-bezier(.22,1,.36,1); }
+tbody tr:hover { background: rgba(30,73,25,.042); }
+tbody tr:hover td:first-child { box-shadow: inset 2px 0 0 var(--ac); }
+
+.nn {
+    font-weight: 500;
+    display: block;
+    transition: color .18s;
+}
+
+.nn:hover { color: var(--ac); }
+
+.nid {
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 3px;
+}
+
+.nb { font-size: 13px; color: var(--sub); line-height: 1.55; }
+
+.tag {
+    font-size: 10px;
+    letter-spacing: .06em;
+    border: 1px solid var(--rule);
+    padding: 2px 7px;
+    color: var(--sub);
+    background: rgba(24,22,15,.03);
+    white-space: nowrap;
+}
+
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ac);
+    animation: pd 2.6s ease-in-out infinite;
+}
+
+.dot.off { background: rgba(24,22,15,.2); animation: none; }
+.dm      { opacity: .35; }
+
+@keyframes pd {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .22; }
+}
+
+.msg { font-size: 13px; color: var(--sub); padding: 20px 0; }
+.err { font-size: 13px; color: #b91c1c; padding: 16px 0; }
+
+/* ── Code ────────────────────────────────────────── */
+pre {
+    font-family: var(--mo);
+    font-size: 12px;
+    line-height: 1.9;
+    background: rgba(24,22,15,.04);
+    border: 1px solid var(--rule);
+    padding: 18px 22px;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+code {
+    font-family: var(--mo);
+    font-size: 12px;
+    background: rgba(24,22,15,.06);
+    padding: 1px 6px;
+}
+
+.ck { color: var(--sub); opacity: .65; }
+.kw { color: var(--ac); }
+.st { color: var(--gold); }
+
+/* ── Steps ───────────────────────────────────────── */
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    counter-reset: s;
+}
+
+.step {
+    display: flex;
+    gap: 16px;
+    counter-increment: s;
+}
+
+.step::before {
+    content: counter(s);
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border: 1px solid rgba(30,73,25,.35);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    color: var(--ac);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.step p      { font-size: 13px; color: var(--sub); line-height: 1.65; }
+.step strong { color: var(--ink); font-weight: 500; }
+
+/* ── Spore demo ──────────────────────────────────── */
+.demo {
+    border: 1px solid var(--rule);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    background: rgba(24,22,15,.02);
+}
+
+.dlbl {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sub);
+}
+
+/* ── Footer ──────────────────────────────────────── */
+footer {
+    padding: 32px 0 48px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--sub);
+    flex-wrap: wrap;
+    gap: 8px;
+    letter-spacing: .03em;
+}
+
+footer a:hover { color: var(--ac); }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 500px) {
+    body     { padding: 0 20px; }
+    h1       { font-size: 34px; }
+    .metrics { gap: 24px; }
+    nav ul   { gap: 18px; }
+    .demo    { padding: 32px 24px; }
+}
+
+/* ── Semantic overrides ────────────────────────────── */
+
+/* blockquote footer wrapping <cite> — remove browser margin */
+blockquote footer {
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* <dl> metrics — reset browser margin/padding */
+dl.metrics, dl.metrics dd, dl.metrics dt {
+    margin: 0;
+    padding: 0;
+}
+
+/* <ol> steps — remove list marker (replaced by counter ::before) */
+ol.steps {
+    list-style: none;
+    padding: 0;
+}
+
+/* <figure> demo — reset browser margin */
+figure.demo {
+    margin: 0;
+}
+
+/* Visually hidden (accessible labels) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* <header> inside <section> and nav .logo as <a> */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* <pre><code> block — reset code margin */
+pre code {
+    display: block;
+    background: none;
+    padding: 0;
+    border: none;
+    font-size: inherit;
+}
