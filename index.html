@@ -68,27 +68,16 @@
                 </dl>
             </section>
     
-            <section id="nodes" aria-labelledby="nodes-heading">
-                <h2 id="nodes-heading">Active Nodes</h2>
-                <div class="nw" role="region" aria-live="polite" aria-label="Node list">
-                    <p class="msg" id="nl">Loading…</p>
-                    <table id="nt" hidden>
-                        <caption class="sr-only">Rhizome network nodes</caption>
-                        <colgroup>
-                            <col class="c0"><col class="c1"><col><col class="c3">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th scope="col"><span class="sr-only">Status</span></th>
-                                <th scope="col">Node</th>
-                                <th scope="col">Bio</th>
-                                <th scope="col">Tag</th>
-                            </tr>
-                        </thead>
-                        <tbody id="nb"></tbody>
-                    </table>
-                    <p class="err" id="ne" hidden role="alert">Could not load nodes.json.</p>
-                </div>
+            <section id="traverse" aria-labelledby="traverse-heading">
+                <h2 id="traverse-heading">Traverse</h2>
+                <button class="wander" id="wander" aria-label="Jump to a random node in the network">
+                    Wander
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/>
+                        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.54 11.54l1.41 1.41M3.05 12.95l1.42-1.42M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+                    </svg>
+                </button>
+                <p class="wander-note" id="wander-note" aria-live="polite"></p>
             </section>
     
             <section id="join" aria-labelledby="join-heading">
