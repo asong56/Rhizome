@@ -1,4 +1,4 @@
-name: 🌿 Graft — Validate Node Submission
+name: Graft — validate node submission
 
 on:
     pull_request:
@@ -10,13 +10,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-
             - uses: actions/setup-node@v4
               with:
                   node-version: '20'
 
             - id: val
-              name: Validate schema
               run: node scripts/validate.js
 
             - name: Backlink check (advisory)
@@ -28,13 +26,11 @@ jobs:
                       .filter(n => n.status !== 'dormant');
                   await Promise.all(nodes.map(async n => {
                       try {
-                          const r = await fetch(n.url, { signal: AbortSignal.timeout(10000) });
+                          const r    = await fetch(n.url, { signal: AbortSignal.timeout(10000) });
                           const html = await r.text();
-                          const ok = html.includes('spore.js') || html.includes('rhizome-spore');
+                          const ok   = html.includes('spore.js') || html.includes('rhizome-spore');
                           console.log(`  ${ok ? '✓' : '⚠'} ${n.name}: backlink ${ok ? 'found' : 'not found'}`);
-                      } catch (e) {
-                          console.log(`  ⚠ ${n.name}: fetch failed — ${e.message}`);
-                      }
+                      } catch (e) { console.log(`  ⚠ ${n.name}: ${e.message}`); }
                   }));
                   JS
 
@@ -48,6 +44,6 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           body: ok
-                              ? '🌿 **Grafting approved.** `nodes.json` is valid — node will join the rhizome on merge.'
-                              : '🥀 **Grafting failed.** Schema errors in `nodes.json` — see the workflow log for details.',
+                              ? '🌿 **Grafting approved.** `nodes.json` is valid — node will join on merge.'
+                              : '🥀 **Grafting failed.** Schema errors in `nodes.json` — see workflow log.',
                       });
