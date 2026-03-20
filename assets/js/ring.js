@@ -17,14 +17,24 @@ function mkrng(seed) {
     return () => { s = (Math.imul(1664525, s) + 1013904223) >>> 0; return s / 2 ** 32; };
 }
 
-function fakeIP(rng) {
-    return `10.${rng() * 254 + 1 | 0}.${rng() * 254 + 1 | 0}.${rng() * 254 + 1 | 0}`;
+function fakeIPv6(rng) {
+    const seg = () => Math.floor(rng() * 0xffff).toString(16).padStart(4, '0');
+    return `${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}`;
 }
 
 function fakeCoord(rng) {
     const la = (rng() * 170 - 85).toFixed(4);
     const lo = (rng() * 360 - 180).toFixed(4);
     return `${Math.abs(la)}° ${la > 0 ? 'N' : 'S'},  ${Math.abs(lo)}° ${lo > 0 ? 'E' : 'W'}`;
+}
+
+// Resolve nodes.json relative to ring.html's own directory
+function nodesUrl() {
+    const base = document.querySelector('meta[name=rz-base]')?.content;
+    if (base) return base + '/nodes.json';
+    // Derive from current page URL: strip filename, append nodes.json
+    const path = location.pathname.replace(/\/[^/]*$/, '/');
+    return location.origin + path + 'nodes.json';
 }
 
 async function boot() {
@@ -35,13 +45,20 @@ async function boot() {
     } catch (_) {}
 
     if (!nodes) {
-        const base = document.querySelector('meta[name=rz-base]')?.content || '';
-        nodes = await fetch(base ? base + '/nodes.json' : 'nodes.json').then(r => r.json());
-        try { localStorage.setItem(K, JSON.stringify({ t: Date.now(), d: nodes })); } catch (_) {}
+        try {
+            nodes = await fetch(nodesUrl()).then(r => {
+                if (!r.ok) throw new Error(r.status);
+                return r.json();
+            });
+            try { localStorage.setItem(K, JSON.stringify({ t: Date.now(), d: nodes })); } catch (_) {}
+        } catch (e) {
+            showError('Failed to load nodes (' + e.message + ')');
+            return;
+        }
     }
 
     const alive = nodes.filter(n => n.status !== 'dormant');
-    if (!alive.length) return;
+    if (!alive.length) { showError('No active nodes'); return; }
 
     let target;
     if (dir === 'r') {
@@ -54,10 +71,10 @@ async function boot() {
     }
 
     const rng = mkrng(parseInt(uid(target.url), 36) >>> 0);
-    const $ = id => document.getElementById(id);
+    const $   = id => document.getElementById(id);
 
     $('f-name').textContent  = target.name;
-    $('f-ip').textContent    = fakeIP(rng);
+    $('f-ip').textContent    = fakeIPv6(rng);
     $('f-coord').textContent = fakeCoord(rng);
     $('f-bio').textContent   = target.bio || '—';
     $('f-url').textContent   = target.url.replace(/^https?:\/\//, '');
@@ -83,6 +100,14 @@ async function boot() {
     }
 
     requestAnimationFrame(tick);
+}
+
+function showError(msg) {
+    const win = document.querySelector('.win');
+    win.style.opacity   = '1';
+    win.style.transform = 'none';
+    document.getElementById('f-name').textContent   = msg;
+    document.getElementById('f-status').textContent = 'ERROR';
 }
 
 boot();
