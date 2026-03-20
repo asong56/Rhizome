@@ -6,7 +6,7 @@
 
     try {
         const nodes = await fetch('nodes.json').then(r => {
-            if (!r.ok) throw 0;
+            if (!r.ok) throw r.status;
             return r.json();
         });
 
@@ -16,7 +16,7 @@
             if (dm) tr.className = 'dm';
             tr.innerHTML =
                 `<td><span class="dot${dm ? ' off' : ''}" title="${dm ? 'dormant' : 'active'}"></span></td>` +
-                `<td><a class="nn" href="${n.url}" target="_blank" rel="noopener">${n.name}</a>` +
+                `<td><a class="nn" href="${n.url}" target="_blank" rel="noopener noreferrer">${n.name}</a>` +
                     `<div class="nid">${n.url.replace(/^https?:\/\//, '')}</div></td>` +
                 `<td class="nb">${n.bio}</td>` +
                 `<td><span class="tag">${n.url.split('.').pop()}</span></td>`;
