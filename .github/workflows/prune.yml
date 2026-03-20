@@ -1,4 +1,4 @@
-name: 🌿 Prune — Mark Dormant Nodes
+name: Prune — mark dormant nodes
 
 on:
     schedule:
@@ -15,16 +15,11 @@ jobs:
             - uses: actions/checkout@v4
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-
             - uses: actions/setup-node@v4
               with:
                   node-version: '20'
-
-            - name: Run pruner
-              run: node scripts/prune.js
-
-            - name: Commit if changed
-              run: |
+            - run: node scripts/prune.js
+            - run: |
                   git diff --quiet nodes.json && exit 0
                   git config user.name  "Rhizome Pruner"
                   git config user.email "pruner@rhizome.network"
