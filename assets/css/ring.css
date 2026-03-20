@@ -46,21 +46,6 @@ html, body {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Decorative corner marks */
-.win::before,
-.win::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-color: rgba(30,73,25,.18);
-    border-style: solid;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.win::before { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
-.win::after  { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
 
 /* ── Title bar ───────────────────────────────────── */
 header.tbar {
@@ -182,8 +167,6 @@ dl.fields { display: flex; flex-direction: column; }
     font-family: var(--mo);
     font-size: 10px;
     letter-spacing: .06em;
-    border: 1px solid rgba(30,73,25,.28);
-    padding: 2px 8px 2px 6px;
     color: #1E4919;
 }
 
