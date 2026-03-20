@@ -1,4 +1,4 @@
-name: 🌿 Prune — Mark Dormant Nodes
+name: Mark Dormant Nodes
 
 on:
   schedule:
