@@ -30,7 +30,6 @@
                     Rhizome
                 </a>
                 <ul role="list">
-                    <li><a href="#traverse">Traverse</a></li>
                     <li><a href="#join">Join</a></li>
                     <li><a href="https://github.com/Ansel-S/Rhizome" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
                 </ul>
@@ -66,18 +65,10 @@
                         <dd class="val">24h</dd>
                     </div>
                 </dl>
-            </section>
-    
-            <section id="traverse" aria-labelledby="traverse-heading">
-                <h2 id="traverse-heading">Traverse</h2>
-                <button class="wander" id="wander" aria-label="Jump to a random node in the network">
-                    Wander
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                        <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/>
-                        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.54 11.54l1.41 1.41M3.05 12.95l1.42-1.42M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".5"/>
-                    </svg>
-                </button>
-                <p class="wander-note" id="wander-note" aria-live="polite"></p>
+                <p class="hero-wander">
+                    <button class="wander" id="wander" aria-label="Jump to a random node in the network">Wander →</button>
+                    <span class="wander-note" id="wander-note" aria-live="polite"></span>
+                </p>
             </section>
     
             <section id="join" aria-labelledby="join-heading">
@@ -90,15 +81,15 @@
                 <figure>
                     <figcaption class="sr-only">Spore embed code</figcaption>
                     <pre><code>
-                        <span class="kw">&lt;rhizome-spore</span>
-                        <span class="st">theme="light"</span>
-                        <span class="st">node-url="https://yoursite.com"</span>
-                        <span class="st">host="https://Ansel-S.github.io/Rhizome"</span>
-                        <span class="kw">&gt;&lt;/rhizome-spore&gt;</span>
-                        <span class="kw">&lt;script</span>
-                        <span class="st">src="https://Ansel-S.github.io/Rhizome/spore.js"</span>
-                        <span class="st">async</span>
-                        <span class="kw">&gt;&lt;/script&gt;</span>
+                    <span class="kw">&lt;rhizome-spore</span>
+                    <span class="st">theme="light"</span>
+                    <span class="st">node-url="https://yoursite.com"</span>
+                    <span class="st">host="https://Ansel-S.github.io/Rhizome"</span>
+                    <span class="kw">&gt;&lt;/rhizome-spore&gt;</span>
+                    <span class="kw">&lt;script</span>
+                    <span class="st">src="https://Ansel-S.github.io/Rhizome/spore.js"</span>
+                    <span class="st">async</span>
+                    <span class="kw">&gt;&lt;/script&gt;</span>
                     </code></pre>
                 </figure>
                 <ol class="steps" role="list" style="margin-top:28px">
