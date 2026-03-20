@@ -2,7 +2,7 @@
 
 **A minimalist, decentralized webring protocol for the indie web.**
 
-Rhizome is a zero-dependency webring infrastructure that rejects the hierarchy of traditional link directories. Sites connect as peers — no center, no authority, just a living network that grows one node at a time.
+Rhizome is a zero-dependency webring infrastructure built for developers who want to be found without going through a platform. It rejects the hierarchy of algorithmic feeds and centralized directories — sites connect as peers, no center, no authority, just a living network that grows one node at a time.
 
 [Live Demo](https://Ansel-S.github.io/Rhizome/) · [Join the Network](https://github.com/Ansel-S/Rhizome/issues/new?template=join.yml)
 
