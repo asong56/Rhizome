@@ -1,10 +1,7 @@
 [
     {
-        "id": "00",
         "name": "Ansel",
         "url": "https://ansel-s.github.io",
-        "bio": "Student developer focused on data analytics and full-stack web architecture.",
-        "tag": "programming",
-        "v": "1.0.0"
+        "bio": "Student developer focused on data analytics and full-stack web architecture."
     }
 ]
