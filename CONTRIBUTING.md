@@ -15,7 +15,7 @@ The simplest contribution is adding your site.
 3. **Wait for review.** The maintainer will verify your site has the Spore embedded, then add your entry to `nodes.json`.
 
 **Node requirements:**
-- Must be a personal or independent site (no commercial storefronts, no spam)
+- Must be a developer's personal site, blog, portfolio, or project page — commercial storefronts and pure landing pages are not a good fit
 - Must be publicly accessible via HTTPS
 - Must have the `<rhizome-spore>` widget embedded and functional
 - Must not host illegal content, malware, or hate speech
