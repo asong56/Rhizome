@@ -21,7 +21,8 @@
 
     function navigate(host, nodeUrl, dir) {
         requestAnimationFrame(() => getOverlay().style.clipPath = 'circle(150% at 50% 50%)');
-        setTimeout(() => { location.href = `${host}/ring.html?f=${uid(nodeUrl)}&d=${dir}`; }, 680);
+        const base = host || (location.origin + location.pathname.replace(/\/[^\/]*$/, ''));
+        setTimeout(() => { location.href = `${base}/ring.html?f=${uid(nodeUrl)}&d=${dir}`; }, 680);
     }
 
     class RhizomeSpore extends HTMLElement {
