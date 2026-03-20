@@ -1,4 +1,4 @@
-name: Validate Node Submission
+name: 🌿 Graft — Validate Node Submission
 
 on:
     pull_request:
