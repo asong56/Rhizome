@@ -1,28 +1,20 @@
-const K     = 'rz1';
-const TTL   = 864e5;
+const K     = 'rz1', TTL = 864e5;
 const DIRS  = { n: '→ Next Node', p: '← Prev Node', r: '⊕ Random Node' };
 const STEPS = ['ROUTING', 'HANDSHAKE', 'VERIFYING', 'TUNNELING', 'CONNECTED'];
 const sp    = new URLSearchParams(location.search);
-const from  = sp.get('f');
-const dir   = sp.get('d') || 'n';
+const from  = sp.get('f'), dir = sp.get('d') || 'n';
 
 document.getElementById('dir-label').textContent = DIRS[dir] || 'Record';
 
-function uid(url) {
+function uid(u) {
     let h = 2166136261;
-    for (let i = 0; i < url.length; i++) {
-        h ^= url.charCodeAt(i);
-        h = Math.imul(h, 16777619) >>> 0;
-    }
+    for (let i = 0; i < u.length; i++) h = Math.imul(h ^ u.charCodeAt(i), 16777619) >>> 0;
     return h.toString(36).toUpperCase().padStart(8, '0').slice(-8);
 }
 
 function mkrng(seed) {
     let s = seed >>> 0;
-    return () => {
-        s = (Math.imul(1664525, s) + 1013904223) >>> 0;
-        return s / 2 ** 32;
-    };
+    return () => { s = (Math.imul(1664525, s) + 1013904223) >>> 0; return s / 2 ** 32; };
 }
 
 function fakeIP(rng) {
@@ -35,10 +27,6 @@ function fakeCoord(rng) {
     return `${Math.abs(la)}° ${la > 0 ? 'N' : 'S'},  ${Math.abs(lo)}° ${lo > 0 ? 'E' : 'W'}`;
 }
 
-function nowUTC() {
-    return new Date().toISOString().slice(0, 19).replace('T', ' ') + ' UTC';
-}
-
 async function boot() {
     let nodes;
     try {
@@ -48,7 +36,7 @@ async function boot() {
 
     if (!nodes) {
         const base = document.querySelector('meta[name=rz-base]')?.content || '';
-        nodes = await fetch(base + '/nodes.json').then(r => r.json());
+        nodes = await fetch(base ? base + '/nodes.json' : 'nodes.json').then(r => r.json());
         try { localStorage.setItem(K, JSON.stringify({ t: Date.now(), d: nodes })); } catch (_) {}
     }
 
@@ -66,32 +54,27 @@ async function boot() {
     }
 
     const rng = mkrng(parseInt(uid(target.url), 36) >>> 0);
+    const $ = id => document.getElementById(id);
 
-    document.getElementById('f-name').textContent  = target.name;
-    document.getElementById('f-ip').textContent    = fakeIP(rng);
-    document.getElementById('f-coord').textContent = fakeCoord(rng);
-    document.getElementById('f-bio').textContent   = target.bio || '—';
-    document.getElementById('f-url').textContent   = target.url.replace(/^https?:\/\//, '');
-    document.getElementById('s-id').textContent    = uid(target.url);
-    document.getElementById('s-time').textContent  = nowUTC();
+    $('f-name').textContent  = target.name;
+    $('f-ip').textContent    = fakeIP(rng);
+    $('f-coord').textContent = fakeCoord(rng);
+    $('f-bio').textContent   = target.bio || '—';
+    $('f-url').textContent   = target.url.replace(/^https?:\/\//, '');
+    $('s-id').textContent    = uid(target.url);
+    $('s-time').textContent  = new Date().toISOString().slice(0, 19).replace('T', ' ') + ' UTC';
 
-    const bar = document.getElementById('bar');
-    const pct = document.getElementById('pct');
-    const lbl = document.getElementById('f-status');
+    const bar = $('bar'), pct = $('pct'), lbl = $('f-status');
     const win = document.querySelector('.win');
-    const t0  = performance.now();
-    const DUR = 1800;
+    const t0  = performance.now(), DUR = 1800;
 
     function tick(now) {
         const p = Math.min(100, (now - t0) / DUR * 100);
-        bar.value = p;
+        bar.value       = p;
         pct.textContent = Math.round(p) + '%';
         lbl.textContent = STEPS[Math.min(4, p / 100 * 5 | 0)];
 
-        if (p < 100) {
-            requestAnimationFrame(tick);
-            return;
-        }
+        if (p < 100) { requestAnimationFrame(tick); return; }
 
         win.style.transition = 'opacity .32s ease, transform .32s cubic-bezier(.22,1,.36,1)';
         win.style.opacity    = '0';
