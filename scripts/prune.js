@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -21,9 +20,7 @@ async function probe(url) {
             });
             clearTimeout(t);
             if (r.ok || r.status < 500) return true;
-        } catch (_) {
-            clearTimeout(t);
-        }
+        } catch (_) { clearTimeout(t); }
     }
     return false;
 }
@@ -35,36 +32,25 @@ async function checkAll(nodes) {
             nodes.slice(i, i + BATCH).map(n => probe(n.url).then(ok => ({ ...n, _ok: ok })))
         );
         out.push(...batch);
-        if (i + BATCH < nodes.length) {
-            await new Promise(r => setTimeout(r, 500));
-        }
+        if (i + BATCH < nodes.length) await new Promise(r => setTimeout(r, 500));
     }
     return out;
 }
 
 const nodes = JSON.parse(readFileSync(PATH, 'utf8'));
 console.log('🌿 Rhizome Pruner\n');
-
 let changed = 0;
-const pruned = (await checkAll(nodes)).map(({ _ok, ...n }) => {
-    const wasDormant = n.status === 'dormant';
-    if (!_ok && !wasDormant) {
-        console.log(`  💤 dormant: ${n.name} (${n.url})`);
-        changed++;
-        return { ...n, status: 'dormant' };
-    }
-    if (_ok && wasDormant) {
-        console.log(`  ✅ revived: ${n.name} (${n.url})`);
-        changed++;
-        const { status, ...revived } = n;
-        return revived;
-    }
+
+const result = (await checkAll(nodes)).map(({ _ok, ...n }) => {
+    const was = n.status === 'dormant';
+    if (!_ok && !was) { console.log(`  💤 dormant: ${n.name}`); changed++; return { ...n, status: 'dormant' }; }
+    if (_ok  &&  was) { console.log(`  ✅ revived: ${n.name}`); changed++; const { status, ...r } = n; return r; }
     console.log(`  ${_ok ? '✓' : '✗'} ${n.name}`);
     return n;
 });
 
 if (changed) {
-    writeFileSync(PATH, JSON.stringify(pruned, null, 4) + '\n');
+    writeFileSync(PATH, JSON.stringify(result, null, 4) + '\n');
     console.log(`\n🌿 ${changed} node(s) updated.`);
 } else {
     console.log('\n🌿 All nodes unchanged.');
