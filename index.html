@@ -9,13 +9,13 @@
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
             media="print" onload="this.media='all'">
-        <link rel="stylesheet" href="/assets/css/index.css">
+        <link rel="stylesheet" href="assets/css/index.css">
     </head>
     <body>
     
         <header>
             <nav aria-label="Site navigation">
-                <a href="/" class="logo" aria-label="Rhizome home">
+                <a href="./" class="logo" aria-label="Rhizome home">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">
                         <circle cx="9" cy="9" r="2" fill="#1E4919"/>
                         <g stroke="#1E4919" stroke-width=".9" stroke-linecap="round" opacity=".5">
@@ -73,13 +73,13 @@
                 <div class="nw" role="region" aria-live="polite" aria-label="Node list">
                     <p class="msg" id="nl">Loading…</p>
                     <table id="nt" hidden>
-                        <caption class="visually-hidden">Rhizome network nodes</caption>
+                        <caption class="sr-only">Rhizome network nodes</caption>
                         <colgroup>
                             <col class="c0"><col class="c1"><col><col class="c3">
                         </colgroup>
                         <thead>
                             <tr>
-                                <th scope="col"><span class="visually-hidden">Status</span></th>
+                                <th scope="col"><span class="sr-only">Status</span></th>
                                 <th scope="col">Node</th>
                                 <th scope="col">Bio</th>
                                 <th scope="col">Tag</th>
@@ -102,7 +102,7 @@
                     </li>
                 </ol>
                 <figure>
-                    <figcaption class="visually-hidden">Embed code for the Rhizome Spore component</figcaption>
+                    <figcaption class="sr-only">Embed code for the Rhizome Spore component</figcaption>
                     <pre><code><span class="ck">&lt;!-- node-url is your site's URL — no ID needed --&gt;</span>
     <span class="kw">&lt;rhizome-spore</span>
         <span class="st">theme</span>="light"
@@ -121,20 +121,6 @@
                 </ol>
             </section>
     
-            <section aria-labelledby="preview-heading">
-                <h2 id="preview-heading">Spore Preview</h2>
-                <figure class="demo">
-                    <figcaption class="dlbl">Live Embed</figcaption>
-                    <rhizome-spore
-                        theme="light"
-                        node-url="https://rhizome.example.com"
-                        host=""
-                        label="🌿 Rhizome"
-                    ></rhizome-spore>
-                    <p class="dlbl" style="font-size:9px;opacity:.6" aria-hidden="true">← prev &thinsp;·&thinsp; random &thinsp;·&thinsp; next →</p>
-                </figure>
-            </section>
-    
         </main>
     
         <footer>
@@ -142,14 +128,13 @@
             <nav aria-label="Footer links">
                 <a href="https://github.com/yourusername/rhizome" target="_blank" rel="noopener noreferrer">GitHub</a>
                 &thinsp;·&thinsp;
-                <a href="/nodes.json">nodes.json</a>
+                <a href="nodes.json">nodes.json</a>
                 &thinsp;·&thinsp;
                 <a href="https://en.wikipedia.org/wiki/Rhizome_(philosophy)" target="_blank" rel="noopener noreferrer">What is a rhizome?</a>
             </nav>
         </footer>
     
-        <script src="/spore.js" async></script>
-        <script src="/assets/js/index.js" defer></script>
+        <script src="assets/js/index.js" defer></script>
     
     </body>
 </html>
