@@ -1,11 +1,10 @@
 :root {
-    --bg:   #F5F2EC;
-    --ink:  #18160F;
-    --sub:  #78746C;
-    --rule: rgba(24,22,15,.1);
-    --ac:   #1E4919;
-    --gold: #B8860B;
-    --rz-bg:#F5F2EC;
+    --bg:  #F5F2EC;
+    --ink: #18160F;
+    --sub: #78746C;
+    --rule:rgba(24,22,15,.1);
+    --ac:  #1E4919;
+    --gold:#B8860B;
     --sf: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     --se: 'Playfair Display', Georgia, serif;
     --mo: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
@@ -34,7 +33,10 @@ body {
     padding: 0 32px;
 }
 
-a { color: inherit; text-decoration: none; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
 /* ── Nav ─────────────────────────────────────────── */
 nav {
@@ -94,9 +96,13 @@ blockquote {
     margin-bottom: 48px;
 }
 
+blockquote footer {
+    margin: 8px 0 0;
+    padding: 0;
+    background: none;
+}
+
 cite {
-    display: block;
-    margin-top: 8px;
     font-style: normal;
     font-family: var(--sf);
     font-size: 11px;
@@ -104,8 +110,18 @@ cite {
     opacity: .65;
 }
 
-.metrics { display: flex; gap: 40px; flex-wrap: wrap; }
-.metric  { display: flex; flex-direction: column; gap: 4px; }
+dl.metrics {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+dl.metrics, dl.metrics dt, dl.metrics dd {
+    margin: 0;
+    padding: 0;
+}
+
+.metric { display: flex; flex-direction: column; gap: 4px; }
 
 .val {
     font-family: var(--se);
@@ -120,6 +136,7 @@ cite {
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--sub);
+    order: -1;
 }
 
 /* ── Sections ────────────────────────────────────── */
@@ -188,7 +205,7 @@ tbody tr:hover td:first-child { box-shadow: inset 2px 0 0 var(--ac); }
     margin-top: 3px;
 }
 
-.nb { font-size: 13px; color: var(--sub); line-height: 1.55; }
+.nb  { font-size: 13px; color: var(--sub); line-height: 1.55; }
 
 .tag {
     font-size: 10px;
@@ -232,6 +249,14 @@ pre {
     margin-top: 20px;
 }
 
+pre code {
+    display: block;
+    background: none;
+    padding: 0;
+    border: none;
+    font-size: inherit;
+}
+
 code {
     font-family: var(--mo);
     font-size: 12px;
@@ -244,7 +269,9 @@ code {
 .st { color: var(--gold); }
 
 /* ── Steps ───────────────────────────────────────── */
-.steps {
+ol.steps {
+    list-style: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -275,24 +302,8 @@ code {
 .step p      { font-size: 13px; color: var(--sub); line-height: 1.65; }
 .step strong { color: var(--ink); font-weight: 500; }
 
-/* ── Spore demo ──────────────────────────────────── */
-.demo {
-    border: 1px solid var(--rule);
-    padding: 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    background: rgba(24,22,15,.02);
-}
-
-.dlbl {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--sub);
-}
+/* ── Figure ──────────────────────────────────────── */
+figure { margin: 0; }
 
 /* ── Footer ──────────────────────────────────────── */
 footer {
@@ -310,43 +321,8 @@ footer {
 
 footer a:hover { color: var(--ac); }
 
-/* ── Responsive ──────────────────────────────────── */
-@media (max-width: 500px) {
-    body     { padding: 0 20px; }
-    h1       { font-size: 34px; }
-    .metrics { gap: 24px; }
-    nav ul   { gap: 18px; }
-    .demo    { padding: 32px 24px; }
-}
-
-/* ── Semantic overrides ────────────────────────────── */
-
-/* blockquote footer wrapping <cite> — remove browser margin */
-blockquote footer {
-    background: none;
-    padding: 0;
-    margin: 0;
-}
-
-/* <dl> metrics — reset browser margin/padding */
-dl.metrics, dl.metrics dd, dl.metrics dt {
-    margin: 0;
-    padding: 0;
-}
-
-/* <ol> steps — remove list marker (replaced by counter ::before) */
-ol.steps {
-    list-style: none;
-    padding: 0;
-}
-
-/* <figure> demo — reset browser margin */
-figure.demo {
-    margin: 0;
-}
-
-/* Visually hidden (accessible labels) */
-.visually-hidden {
+/* ── Accessibility ───────────────────────────────── */
+.sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -358,20 +334,10 @@ figure.demo {
     border: 0;
 }
 
-/* <header> inside <section> and nav .logo as <a> */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    text-decoration: none;
-    color: inherit;
-}
-
-/* <pre><code> block — reset code margin */
-pre code {
-    display: block;
-    background: none;
-    padding: 0;
-    border: none;
-    font-size: inherit;
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 500px) {
+    body         { padding: 0 20px; }
+    h1           { font-size: 34px; }
+    dl.metrics   { gap: 24px; }
+    nav ul       { gap: 18px; }
 }
