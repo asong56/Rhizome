@@ -34,7 +34,9 @@ body:
       attributes:
           label: Checklist
           options:
-              - label: My site is publicly accessible
+              - label: My site is publicly accessible via HTTPS
                 required: true
               - label: I have added the Spore embed to my site
+                required: true
+              - label: My site is a developer's personal site, blog, portfolio, or project page
                 required: true
