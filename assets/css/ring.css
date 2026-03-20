@@ -1,0 +1,263 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    background: #F5F2EC;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scene ───────────────────────────────────────── */
+.scene {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* ── Window ──────────────────────────────────────── */
+.win {
+    position: relative;
+    width: min(460px, 100%);
+    background: #F5F2EC;
+    border: 1px solid rgba(24,22,15,.13);
+    border-radius: 12px;
+    box-shadow:
+        0 0 0 .5px rgba(255,255,255,.7) inset,
+        0 2px 6px rgba(24,22,15,.06),
+        0 16px 48px rgba(24,22,15,.13),
+        0 48px 96px rgba(24,22,15,.07);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(6px) scale(.97);
+    animation: rise .5s cubic-bezier(.34,1.3,.64,1) .05s forwards;
+}
+
+@keyframes rise {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Decorative corner marks */
+.win::before,
+.win::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: rgba(30,73,25,.18);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.win::before { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+.win::after  { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+
+/* ── Title bar ───────────────────────────────────── */
+.tbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: rgba(245,242,236,.7);
+    border-bottom: 1px solid rgba(24,22,15,.09);
+}
+
+.dots { display: flex; gap: 7px; }
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+.dot.r { background: #FF5F56; }
+.dot.y { background: #FFBD2E; }
+.dot.g { background: #27C93F; }
+
+.tbar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(24,22,15,.45);
+    letter-spacing: .01em;
+    margin-left: -46px;
+}
+
+/* ── Body ────────────────────────────────────────── */
+.body { padding: 22px 22px 24px; }
+
+/* ── Registry header ─────────────────────────────── */
+.rhead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(24,22,15,.08);
+}
+
+.rtitle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.2;
+    color: #18160F;
+}
+
+.rtitle em {
+    font-style: italic;
+    color: #1E4919;
+}
+
+.stamp {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: .06em;
+    color: rgba(24,22,15,.4);
+    text-align: right;
+    line-height: 1.75;
+    border: 1px solid rgba(24,22,15,.1);
+    padding: 5px 9px;
+}
+
+.stamp b { color: #B8860B; font-weight: 500; }
+
+/* ── Fields ──────────────────────────────────────── */
+.fields { display: flex; flex-direction: column; }
+
+.field {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 8px;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(24,22,15,.055);
+}
+
+.field:last-child { border-bottom: none; }
+
+.fk {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(24,22,15,.42);
+}
+
+.fv {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: #18160F;
+    line-height: 1.4;
+}
+
+.fv.serif {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: -.01em;
+}
+
+.fv.green { color: #1E4919; }
+.fv.dim   { color: rgba(24,22,15,.5); font-size: 11.5px; }
+
+/* ── Status pill ─────────────────────────────────── */
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    border: 1px solid rgba(30,73,25,.28);
+    padding: 2px 8px 2px 6px;
+    color: #1E4919;
+}
+
+.pdot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #1E4919;
+    animation: bk 2s ease-in-out infinite;
+}
+
+@keyframes bk {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .18; }
+}
+
+/* ── Progress bar ────────────────────────────────── */
+.prog {
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(24,22,15,.08);
+}
+
+.plabel {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: rgba(24,22,15,.4);
+    margin-bottom: 7px;
+}
+
+.track {
+    height: 2px;
+    background: rgba(24,22,15,.1);
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    background: #1E4919;
+    transition: width .05s linear;
+}
+
+/* Native <progress> element override (replaces .track / .fill divs) */
+progress.track {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border: none;
+    background: rgba(24,22,15,.1);
+    color: #1E4919;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+progress.track::-webkit-progress-bar   { background: rgba(24,22,15,.1); }
+progress.track::-webkit-progress-value { background: #1E4919; transition: width .05s linear; }
+progress.track::-moz-progress-bar      { background: #1E4919; }
+
+/* ── Semantic overrides ────────────────────────────── */
+
+/* <dl> fields — reset browser margin */
+dl.fields, dl.fields dt, dl.fields dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* <header> inside .win — reset browser styles */
+header.tbar, header.rhead {
+    background: revert;
+}
+
+/* <output> element for progress percentage */
+output {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: rgba(24,22,15,.4);
+}
