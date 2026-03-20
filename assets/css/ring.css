@@ -1,3 +1,7 @@
+:root {
+    --mo: 'JetBrains Mono', ui-monospace, monospace;
+}
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -59,7 +63,7 @@ html, body {
 .win::after  { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
 
 /* ── Title bar ───────────────────────────────────── */
-.tbar {
+header.tbar {
     height: 44px;
     display: flex;
     align-items: center;
@@ -96,13 +100,14 @@ html, body {
 .body { padding: 22px 22px 24px; }
 
 /* ── Registry header ─────────────────────────────── */
-.rhead {
+header.rhead {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 18px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(24,22,15,.08);
+    background: none;
 }
 
 .rtitle {
@@ -118,7 +123,7 @@ html, body {
 }
 
 .stamp {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--mo);
     font-size: 9.5px;
     letter-spacing: .06em;
     color: rgba(24,22,15,.4);
@@ -128,10 +133,10 @@ html, body {
     padding: 5px 9px;
 }
 
-.stamp b { color: #B8860B; font-weight: 500; }
+.stamp strong { color: #B8860B; font-weight: 500; }
 
 /* ── Fields ──────────────────────────────────────── */
-.fields { display: flex; flex-direction: column; }
+dl.fields { display: flex; flex-direction: column; }
 
 .field {
     display: grid;
@@ -153,7 +158,7 @@ html, body {
 }
 
 .fv {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--mo);
     font-size: 12px;
     color: #18160F;
     line-height: 1.4;
@@ -174,7 +179,7 @@ html, body {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--mo);
     font-size: 10px;
     letter-spacing: .06em;
     border: 1px solid rgba(30,73,25,.28);
@@ -195,37 +200,28 @@ html, body {
     50%       { opacity: .18; }
 }
 
-/* ── Progress bar ────────────────────────────────── */
-.prog {
+/* ── Progress ────────────────────────────────────── */
+footer.prog {
     margin-top: 18px;
     padding-top: 15px;
     border-top: 1px solid rgba(24,22,15,.08);
+    background: none;
 }
 
 .plabel {
     display: flex;
     justify-content: space-between;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: .06em;
-    color: rgba(24,22,15,.4);
     margin-bottom: 7px;
 }
 
-.track {
-    height: 2px;
-    background: rgba(24,22,15,.1);
-    overflow: hidden;
+.plabel span,
+output {
+    font-family: var(--mo);
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: rgba(24,22,15,.4);
 }
 
-.fill {
-    height: 100%;
-    width: 0%;
-    background: #1E4919;
-    transition: width .05s linear;
-}
-
-/* Native <progress> element override (replaces .track / .fill divs) */
 progress.track {
     display: block;
     width: 100%;
@@ -240,24 +236,3 @@ progress.track {
 progress.track::-webkit-progress-bar   { background: rgba(24,22,15,.1); }
 progress.track::-webkit-progress-value { background: #1E4919; transition: width .05s linear; }
 progress.track::-moz-progress-bar      { background: #1E4919; }
-
-/* ── Semantic overrides ────────────────────────────── */
-
-/* <dl> fields — reset browser margin */
-dl.fields, dl.fields dt, dl.fields dd {
-    margin: 0;
-    padding: 0;
-}
-
-/* <header> inside .win — reset browser styles */
-header.tbar, header.rhead {
-    background: revert;
-}
-
-/* <output> element for progress percentage */
-output {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: .06em;
-    color: rgba(24,22,15,.4);
-}
