@@ -9,15 +9,11 @@ document.getElementById('dir-label').textContent = DIRS[dir] || 'Record';
 function uid(u) {
     let h = 2166136261;
     for (let i = 0; i < u.length; i++) h = Math.imul(h ^ u.charCodeAt(i), 16777619) >>> 0;
-    return h;
-}
-
-function uidStr(h) {
     return h.toString(36).toUpperCase().padStart(8, '0').slice(-8);
 }
 
 function mkrng(seed) {
-    let s = seed >>> 0;
+    let s = parseInt(seed, 36) >>> 0;
     return () => { s = (Math.imul(1664525, s) + 1013904223) >>> 0; return s / 2 ** 32; };
 }
 
@@ -56,21 +52,21 @@ function pickTarget(alive) {
         crypto.getRandomValues(u);
         return alive[u[0] % alive.length];
     }
-    const i = alive.findIndex(n => uidStr(uid(n.url)) === from?.toUpperCase());
+    const i = alive.findIndex(n => uid(n.url) === from?.toUpperCase());
     return alive[(i + (dir === 'p' ? -1 : 1) + alive.length) % alive.length];
 }
 
 function fillCard(target) {
-    const hash = uid(target.url);
-    const rng  = mkrng(hash);
-    const $    = id => document.getElementById(id);
+    const id  = uid(target.url);
+    const rng = mkrng(id);
+    const $   = id => document.getElementById(id);
 
     $('f-name').textContent  = target.name;
     $('f-ip').textContent    = fakeIPv6(rng);
     $('f-coord').textContent = fakeCoord(rng);
     $('f-bio').textContent   = target.bio || '—';
     $('f-url').textContent   = target.url.replace(/^https?:\/\//, '');
-    $('s-id').textContent    = uidStr(hash);
+    $('s-id').textContent    = id;
     $('s-time').textContent  = new Date().toISOString().slice(0, 19).replace('T', ' ') + ' UTC';
 }
 
@@ -82,17 +78,18 @@ function showError(msg) {
 }
 
 function startProgress(targetUrl) {
-    const bar = document.getElementById('bar');
-    const pct = document.getElementById('pct');
-    const lbl = document.getElementById('f-status');
-    const win = document.querySelector('.win');
-    const t0  = performance.now(), DUR = 1800;
+    const bar  = document.getElementById('bar');
+    const pct  = document.getElementById('pct');
+    const lbl  = document.getElementById('f-status');
+    const win  = document.querySelector('.win');
+    const t0   = performance.now(), DUR = 1800;
 
     function tick(now) {
-        const p = Math.min(100, (now - t0) / DUR * 100);
+        const p    = Math.min(100, (now - t0) / DUR * 100);
+        const step = Math.min(4, p / 20 | 0);
         bar.value       = p;
         pct.textContent = Math.round(p) + '%';
-        lbl.textContent = STEPS[Math.min(4, p / 100 * 5 | 0)];
+        lbl.textContent = STEPS[step];
 
         if (p < 100) { requestAnimationFrame(tick); return; }
 
