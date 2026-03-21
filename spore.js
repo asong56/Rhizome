@@ -4,10 +4,6 @@
     function uid(u) {
         let h = 2166136261;
         for (let i = 0; i < u.length; i++) h = Math.imul(h ^ u.charCodeAt(i), 16777619) >>> 0;
-        return h;
-    }
-
-    function uidStr(h) {
         return h.toString(36).toUpperCase().padStart(8, '0').slice(-8);
     }
 
@@ -25,25 +21,13 @@
 
     function navigate(host, nodeUrl, dir) {
         requestAnimationFrame(() => getOverlay().style.clipPath = 'circle(150% at 50% 50%)');
-        const base = host || (location.origin + location.pathname.replace(/\/[^/]*$/, ''));
-        setTimeout(() => { location.href = `${base}/ring.html?f=${uidStr(uid(nodeUrl))}&d=${dir}`; }, 680);
+        const base = host || (location.origin + location.pathname.replace(/\/[^/]*$/, '') || '/');
+        setTimeout(() => { location.href = `${base}/ring.html?f=${uid(nodeUrl)}&d=${dir}`; }, 680);
     }
 
     const THEMES = {
-        light: {
-            fg:  '#18160F',
-            bg:  'rgba(245,242,236,.92)',
-            br:  'rgba(24,22,15,.12)',
-            ac:  '#1E4919',
-            ink: 'rgba(30,73,25,.1)',
-        },
-        dark: {
-            fg:  '#E8E6DF',
-            bg:  'rgba(20,18,14,.9)',
-            br:  'rgba(232,230,223,.12)',
-            ac:  '#7fff8a',
-            ink: 'rgba(127,255,138,.08)',
-        },
+        light: { fg: '#18160F', bg: 'rgba(245,242,236,.92)', br: 'rgba(24,22,15,.12)',    ac: '#1E4919',  ink: 'rgba(30,73,25,.1)'     },
+        dark:  { fg: '#E8E6DF', bg: 'rgba(20,18,14,.9)',     br: 'rgba(232,230,223,.12)', ac: '#7fff8a',  ink: 'rgba(127,255,138,.08)' },
     };
 
     class RhizomeSpore extends HTMLElement {
