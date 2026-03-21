@@ -1,5 +1,14 @@
 :root {
+    --bg:  #F5F2EC;
+    --ink: #18160F;
+    --sub: rgba(24,22,15,.42);
+    --dim: rgba(24,22,15,.4);
+    --rule:rgba(24,22,15,.1);
+    --ac:  #1E4919;
+    --gold:#B8860B;
     --mo: 'JetBrains Mono', ui-monospace, monospace;
+    --se: 'Playfair Display', Georgia, serif;
+    --sf: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 }
 
 *, *::before, *::after {
@@ -10,8 +19,8 @@
 
 html, body {
     height: 100%;
-    background: #F5F2EC;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    font-family: var(--sf);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -28,14 +37,12 @@ html, body {
 .win {
     position: relative;
     width: min(460px, 100%);
-    background: #F5F2EC;
+    background: var(--bg);
     border: 1px solid rgba(24,22,15,.13);
     border-radius: 12px;
     box-shadow:
         0 0 0 .5px rgba(255,255,255,.7) inset,
-        0 2px 6px rgba(24,22,15,.06),
-        0 16px 48px rgba(24,22,15,.13),
-        0 48px 96px rgba(24,22,15,.07);
+        0 8px 40px rgba(24,22,15,.14);
     overflow: hidden;
     opacity: 0;
     transform: translateY(6px) scale(.97);
@@ -45,7 +52,6 @@ html, body {
 @keyframes rise {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 
 /* ── Title bar ───────────────────────────────────── */
 header.tbar {
@@ -96,29 +102,26 @@ header.rhead {
 }
 
 .rtitle {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--se);
     font-size: 17px;
     line-height: 1.2;
-    color: #18160F;
+    color: var(--ink);
 }
 
-.rtitle em {
-    font-style: italic;
-    color: #1E4919;
-}
+.rtitle em { font-style: italic; color: var(--ac); }
 
 .stamp {
     font-family: var(--mo);
     font-size: 9.5px;
     letter-spacing: .06em;
-    color: rgba(24,22,15,.4);
+    color: var(--dim);
     text-align: right;
     line-height: 1.75;
-    border: 1px solid rgba(24,22,15,.1);
+    border: 1px solid var(--rule);
     padding: 5px 9px;
 }
 
-.stamp strong { color: #B8860B; font-weight: 500; }
+.stamp strong { color: var(--gold); font-weight: 500; }
 
 /* ── Fields ──────────────────────────────────────── */
 dl.fields { display: flex; flex-direction: column; }
@@ -139,24 +142,24 @@ dl.fields { display: flex; flex-direction: column; }
     font-weight: 500;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: rgba(24,22,15,.42);
+    color: var(--sub);
 }
 
 .fv {
     font-family: var(--mo);
     font-size: 12px;
-    color: #18160F;
+    color: var(--ink);
     line-height: 1.4;
 }
 
 .fv.serif {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--se);
     font-style: italic;
     font-size: 14px;
     letter-spacing: -.01em;
 }
 
-.fv.green { color: #1E4919; }
+.fv.green { color: var(--ac); }
 .fv.dim   { color: rgba(24,22,15,.5); font-size: 11.5px; }
 
 /* ── Status pill ─────────────────────────────────── */
@@ -167,14 +170,14 @@ dl.fields { display: flex; flex-direction: column; }
     font-family: var(--mo);
     font-size: 10px;
     letter-spacing: .06em;
-    color: #1E4919;
+    color: var(--ac);
 }
 
 .pdot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #1E4919;
+    background: var(--ac);
     animation: bk 2s ease-in-out infinite;
 }
 
@@ -187,7 +190,7 @@ dl.fields { display: flex; flex-direction: column; }
 footer.prog {
     margin-top: 18px;
     padding-top: 15px;
-    border-top: 1px solid rgba(24,22,15,.08);
+    border-top: 1px solid var(--rule);
     background: none;
 }
 
@@ -202,7 +205,7 @@ output {
     font-family: var(--mo);
     font-size: 10px;
     letter-spacing: .06em;
-    color: rgba(24,22,15,.4);
+    color: var(--dim);
 }
 
 progress.track {
@@ -210,12 +213,12 @@ progress.track {
     width: 100%;
     height: 2px;
     border: none;
-    background: rgba(24,22,15,.1);
-    color: #1E4919;
+    background: var(--rule);
+    color: var(--ac);
     appearance: none;
     -webkit-appearance: none;
 }
 
-progress.track::-webkit-progress-bar   { background: rgba(24,22,15,.1); }
-progress.track::-webkit-progress-value { background: #1E4919; transition: width .05s linear; }
-progress.track::-moz-progress-bar      { background: #1E4919; }
+progress.track::-webkit-progress-bar   { background: var(--rule); }
+progress.track::-webkit-progress-value { background: var(--ac); transition: width .05s linear; }
+progress.track::-moz-progress-bar      { background: var(--ac); }
