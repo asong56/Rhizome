@@ -9,6 +9,10 @@ document.getElementById('dir-label').textContent = DIRS[dir] || 'Record';
 function uid(u) {
     let h = 2166136261;
     for (let i = 0; i < u.length; i++) h = Math.imul(h ^ u.charCodeAt(i), 16777619) >>> 0;
+    return h;
+}
+
+function uidStr(h) {
     return h.toString(36).toUpperCase().padStart(8, '0').slice(-8);
 }
 
@@ -18,8 +22,8 @@ function mkrng(seed) {
 }
 
 function fakeIPv6(rng) {
-    const seg = () => Math.floor(rng() * 0xffff).toString(16).padStart(4, '0');
-    return `${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}:${seg()}`;
+    const seg = () => (rng() * 0xffff | 0).toString(16).padStart(4, '0');
+    return Array.from({ length: 8 }, seg).join(':');
 }
 
 function fakeCoord(rng) {
@@ -28,60 +32,59 @@ function fakeCoord(rng) {
     return `${Math.abs(la)}° ${la > 0 ? 'N' : 'S'},  ${Math.abs(lo)}° ${lo > 0 ? 'E' : 'W'}`;
 }
 
-// Resolve nodes.json relative to ring.html's own directory
 function nodesUrl() {
     const base = document.querySelector('meta[name=rz-base]')?.content;
     if (base) return base + '/nodes.json';
-    // Derive from current page URL: strip filename, append nodes.json
-    const path = location.pathname.replace(/\/[^/]*$/, '/');
-    return location.origin + path + 'nodes.json';
+    return location.origin + location.pathname.replace(/\/[^/]*$/, '/') + 'nodes.json';
 }
 
-async function boot() {
-    let nodes;
+async function loadNodes() {
     try {
         const c = JSON.parse(localStorage.getItem(K));
-        if (c && Date.now() - c.t < TTL) nodes = c.d;
+        if (c && Date.now() - c.t < TTL) return c.d;
     } catch (_) {}
+    const r = await fetch(nodesUrl());
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    try { localStorage.setItem(K, JSON.stringify({ t: Date.now(), d: data })); } catch (_) {}
+    return data;
+}
 
-    if (!nodes) {
-        try {
-            nodes = await fetch(nodesUrl()).then(r => {
-                if (!r.ok) throw new Error(r.status);
-                return r.json();
-            });
-            try { localStorage.setItem(K, JSON.stringify({ t: Date.now(), d: nodes })); } catch (_) {}
-        } catch (e) {
-            showError('Failed to load nodes (' + e.message + ')');
-            return;
-        }
-    }
-
-    const alive = nodes.filter(n => n.status !== 'dormant');
-    if (!alive.length) { showError('No active nodes'); return; }
-
-    let target;
+function pickTarget(alive) {
     if (dir === 'r') {
         const u = new Uint32Array(1);
         crypto.getRandomValues(u);
-        target = alive[u[0] % alive.length];
-    } else {
-        const i = alive.findIndex(n => uid(n.url) === from?.toUpperCase());
-        target = alive[(i + (dir === 'p' ? -1 : 1) + alive.length) % alive.length];
+        return alive[u[0] % alive.length];
     }
+    const i = alive.findIndex(n => uidStr(uid(n.url)) === from?.toUpperCase());
+    return alive[(i + (dir === 'p' ? -1 : 1) + alive.length) % alive.length];
+}
 
-    const rng = mkrng(parseInt(uid(target.url), 36) >>> 0);
-    const $   = id => document.getElementById(id);
+function fillCard(target) {
+    const hash = uid(target.url);
+    const rng  = mkrng(hash);
+    const $    = id => document.getElementById(id);
 
     $('f-name').textContent  = target.name;
     $('f-ip').textContent    = fakeIPv6(rng);
     $('f-coord').textContent = fakeCoord(rng);
     $('f-bio').textContent   = target.bio || '—';
     $('f-url').textContent   = target.url.replace(/^https?:\/\//, '');
-    $('s-id').textContent    = uid(target.url);
+    $('s-id').textContent    = uidStr(hash);
     $('s-time').textContent  = new Date().toISOString().slice(0, 19).replace('T', ' ') + ' UTC';
+}
 
-    const bar = $('bar'), pct = $('pct'), lbl = $('f-status');
+function showError(msg) {
+    const win = document.querySelector('.win');
+    win.style.cssText += ';animation:none;opacity:1;transform:none';
+    document.getElementById('f-name').textContent   = msg;
+    document.getElementById('f-status').textContent = 'ERROR';
+}
+
+function startProgress(targetUrl) {
+    const bar = document.getElementById('bar');
+    const pct = document.getElementById('pct');
+    const lbl = document.getElementById('f-status');
     const win = document.querySelector('.win');
     const t0  = performance.now(), DUR = 1800;
 
@@ -96,18 +99,22 @@ async function boot() {
         win.style.transition = 'opacity .32s ease, transform .32s cubic-bezier(.22,1,.36,1)';
         win.style.opacity    = '0';
         win.style.transform  = 'translateY(-4px) scale(.98)';
-        setTimeout(() => location.replace(target.url), 340);
+        setTimeout(() => location.replace(targetUrl), 340);
     }
 
     requestAnimationFrame(tick);
 }
 
-function showError(msg) {
-    const win = document.querySelector('.win');
-    win.style.opacity   = '1';
-    win.style.transform = 'none';
-    document.getElementById('f-name').textContent   = msg;
-    document.getElementById('f-status').textContent = 'ERROR';
+async function boot() {
+    try {
+        const alive = (await loadNodes()).filter(n => n.status !== 'dormant');
+        if (!alive.length) { showError('No active nodes'); return; }
+        const target = pickTarget(alive);
+        fillCard(target);
+        startProgress(target.url);
+    } catch (e) {
+        showError('Failed to load nodes (' + e.message + ')');
+    }
 }
 
 boot();
