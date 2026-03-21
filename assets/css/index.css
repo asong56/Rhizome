@@ -23,7 +23,6 @@ html {
     font-size: 15px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
 }
 
@@ -113,11 +112,6 @@ dl.metrics {
     display: flex;
     gap: 40px;
     flex-wrap: wrap;
-}
-
-dl.metrics, dl.metrics dt, dl.metrics dd {
-    margin: 0;
-    padding: 0;
 }
 
 .metric { display: flex; flex-direction: column; gap: 4px; }
