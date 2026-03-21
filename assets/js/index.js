@@ -5,10 +5,6 @@ const note = document.getElementById('wander-note');
 function uid(u) {
     let h = 2166136261;
     for (let i = 0; i < u.length; i++) h = Math.imul(h ^ u.charCodeAt(i), 16777619) >>> 0;
-    return h;
-}
-
-function uidStr(h) {
     return h.toString(36).toUpperCase().padStart(8, '0').slice(-8);
 }
 
@@ -38,7 +34,7 @@ btn.addEventListener('click', async () => {
         const u = new Uint32Array(1);
         crypto.getRandomValues(u);
         const target = alive[u[0] % alive.length];
-        location.href = `ring.html?f=${uidStr(uid(target.url))}&d=r`;
+        location.href = `ring.html?f=${uid(target.url)}&d=r`;
     } catch (_) {
         note.textContent = 'Could not load nodes — try again.';
         btn.disabled = false;
